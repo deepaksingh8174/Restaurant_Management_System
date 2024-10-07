@@ -61,6 +61,9 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var user = model.Login{}
+
+	//u can create  function for decode things
+
 	decodeErr := json.NewDecoder(r.Body).Decode(&user)
 	if decodeErr != nil {
 		utils.RespondJSON(w, http.StatusInternalServerError, utils.Status{Message: "enter appropriate value in postman"})
