@@ -17,6 +17,7 @@ import (
 //const SecretKey = "my_secret_key"
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	//TODO :-  user created by admin or sub-admin why user register
 	var users model.Register
 	decodeErr := json.NewDecoder(r.Body).Decode(&users)
 	if decodeErr != nil {
