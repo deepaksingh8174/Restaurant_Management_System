@@ -17,6 +17,7 @@ import (
 //const SecretKey = "my_secret_key"
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	//TODO :-  user created by admin or sub-admin why user register
 	var users model.Register
 	decodeErr := json.NewDecoder(r.Body).Decode(&users)
 	if decodeErr != nil {
@@ -61,6 +62,9 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var user = model.Login{}
+
+	//u can create  function for decode things
+
 	decodeErr := json.NewDecoder(r.Body).Decode(&user)
 	if decodeErr != nil {
 		utils.RespondJSON(w, http.StatusInternalServerError, utils.Status{Message: "enter appropriate value in postman"})

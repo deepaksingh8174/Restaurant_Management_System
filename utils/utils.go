@@ -19,6 +19,8 @@ func HashPassword(password string) (string, error) {
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+	//TODO :- you can change return type error and simply return
+	/*return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))*/
 }
 
 func RespondJSON(w http.ResponseWriter, statusCode int, body interface{}) {
