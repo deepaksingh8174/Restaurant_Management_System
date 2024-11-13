@@ -43,6 +43,16 @@ func Errorf(format string, args ...interface{}) {
 	log.WithFields(logrus.Fields{}).Errorf(format, args...)
 }
 
+func Error(args ...interface{}) {
+	log.WithFields(logrus.Fields{
+		"status":       args[0],
+		"message":      args[1],
+		"err":          args[2],
+		"requestBody":  args[3],
+		"responseBody": args[4],
+	}).Error(args[1])
+}
+
 func Fatalf(format string, args ...interface{}) {
 	log.WithFields(logrus.Fields{}).Fatalf(format, args...)
 }

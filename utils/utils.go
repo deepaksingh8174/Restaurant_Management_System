@@ -67,7 +67,7 @@ func newClientError(err error, statusCode int, messageToUser string, additionalI
 
 // RespondError sends an error message to the API caller and logs the error
 func RespondError(w http.ResponseWriter, statusCode int, err error, messageToUser string, reqBody, responseBody interface{}, additionalInfoForDevs ...string) {
-	log.Errorf("RespondError: status: %d, message: %s, err: %+v  requestBody: %+v, responseBody: %+v", statusCode, messageToUser, err, reqBody, responseBody)
+	log.Error(statusCode, messageToUser, err, reqBody, responseBody)
 	clientError := newClientError(err, statusCode, messageToUser, additionalInfoForDevs...)
 	w.WriteHeader(statusCode)
 	if err := json.NewEncoder(w).Encode(clientError); err != nil {

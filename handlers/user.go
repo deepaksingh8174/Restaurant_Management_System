@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"example.com/database"
 	"example.com/database/dbHelper"
 	"example.com/model"
@@ -63,18 +64,18 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var user = model.Login{}
 	decodeErr := json.NewDecoder(r.Body).Decode(&user)
 	if decodeErr != nil {
-		utils.RespondError(w, http.StatusBadRequest, decodeErr, "failed to parse request body", user, "")
+		utils.RespondError(w, http.StatusBadRequest, decodeErr, "Login : failed to parse request body", user, "")
 		return
 	}
 
 	userId, err := dbHelper.GetIdByPassword(user.Email, user.Password)
 	if err != nil {
-		utils.RespondJSON(w, http.StatusInternalServerError, utils.Status{Message: "failed to check database"})
+		utils.RespondError(w, http.StatusInternalServerError, err, "Login : failed to check user existence", user, "")
 		return
 	}
 
 	if userId == uuid.Nil {
-		utils.RespondJSON(w, http.StatusBadRequest, utils.Status{Message: "wrong credentials entered"})
+		utils.RespondError(w, http.StatusBadRequest, errors.New("wrong credentials entered"), "Login: wrong credentials entered", user, "")
 		return
 	}
 
@@ -90,7 +91,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 	tokenString, tokenErr := token.SignedString([]byte(os.Getenv("SecretKey")))
 	if tokenErr != nil {
-		utils.RespondError(w, http.StatusInternalServerError, tokenErr, "error occurred in generation of token", user, "")
+		utils.RespondError(w, http.StatusInternalServerError, tokenErr, "Login : error occurred in generation of token", user, "")
 		return
 	}
 	type tokenStruct struct {
