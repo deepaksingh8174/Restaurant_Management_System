@@ -69,6 +69,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	// todo: give proper names
 	userId, err := dbHelper.GetIdByPassword(user.Email, user.Password)
 	if err != nil {
+
 		utils.RespondJSON(w, http.StatusInternalServerError, utils.Status{Message: "failed to check database"})
 		return
 	}

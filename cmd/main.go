@@ -2,6 +2,7 @@ package main
 
 import (
 	"example.com/database"
+	"example.com/log"
 	"example.com/server"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -14,6 +15,7 @@ import (
 const shutDownTimeOut = 10 * time.Second
 
 func main() {
+	log.Init()
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
@@ -35,7 +37,7 @@ func main() {
 			logrus.Panicf("Failed to run server with error: %+v", err)
 		}
 	}()
-	logrus.Print("Server started at :8084")
+	log.Infof("Server started at :8084")
 
 	<-done
 
