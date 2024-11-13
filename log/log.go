@@ -18,11 +18,11 @@ func Init() {
 
 	log.SetFormatter(&logrus.JSONFormatter{PrettyPrint: false})
 
-	log.SetReportCaller(true)
+	log.SetReportCaller(false)
 
 	// Output to stdout instead of the default stderr
 	// Can be any io.Writer, see below for File example
-	logrus.SetOutput(io.MultiWriter(os.Stdout, file))
+	log.SetOutput(io.MultiWriter(os.Stdout, file))
 
 	// Only log the Debug severity or above.
 	// Will log anything that is Debug or above (info, warn, error, fatal, panic).

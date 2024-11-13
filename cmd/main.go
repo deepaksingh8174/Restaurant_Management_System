@@ -30,18 +30,18 @@ func main() {
 		database.SSLModeDisable); err != nil {
 		logrus.Fatalf("Failed to initialize and migrate database with error: %+v", err)
 	}
-	logrus.Print("migration successful!!")
+	log.Info("migration successful!!")
 
 	go func() {
 		if err := srv.Run(":8084"); err != nil && err != http.ErrServerClosed {
 			logrus.Panicf("Failed to run server with error: %+v", err)
 		}
 	}()
-	log.Infof("Server started at :8084")
+	log.Info("Server started at :8084")
 
 	<-done
 
-	logrus.Info("shutting down server")
+	log.Info("shutting down server")
 	if err := database.ShutdownDatabase(); err != nil {
 		logrus.WithError(err).Error("failed to close database connection")
 	}
