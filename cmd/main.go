@@ -4,7 +4,6 @@ import (
 	"example.com/database"
 	"example.com/log"
 	"example.com/server"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"os/signal"
@@ -34,7 +33,7 @@ func main() {
 
 	go func() {
 		if err := srv.Run(":8084"); err != nil && err != http.ErrServerClosed {
-			logrus.Panicf("Failed to run server with error: %+v", err)
+			log.Fatalf("Failed to run server with error: %+v", err)
 		}
 	}()
 	log.Info("Server started at :8084")
@@ -47,6 +46,6 @@ func main() {
 	}
 
 	if err := srv.Shutdown(shutDownTimeOut); err != nil {
-		logrus.WithError(err).Panic("failed to gracefully shutdown server")
+		log.Fatalf("Failed to shutdown server with error: %+v", err)
 	}
 }
