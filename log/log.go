@@ -40,7 +40,9 @@ func Info(format string, args ...interface{}) {
 }
 
 func Errorf(format string, args ...interface{}) {
-	log.WithFields(logrus.Fields{
-		"serviceName": "precium-server",
-	}).Errorf(format, args...)
+	log.WithFields(logrus.Fields{}).Errorf(format, args...)
+}
+
+func Fatalf(format string, args ...interface{}) {
+	log.WithFields(logrus.Fields{}).Fatalf(format, args...)
 }

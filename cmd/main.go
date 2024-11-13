@@ -28,7 +28,7 @@ func main() {
 		os.Getenv("user"),
 		os.Getenv("password"),
 		database.SSLModeDisable); err != nil {
-		logrus.Fatalf("Failed to initialize and migrate database with error: %+v", err)
+		log.Fatalf("Failed to initialize and migrate database with error: %v", err)
 	}
 	log.Info("migration successful!!")
 
@@ -43,7 +43,7 @@ func main() {
 
 	log.Info("shutting down server")
 	if err := database.ShutdownDatabase(); err != nil {
-		logrus.WithError(err).Error("failed to close database connection")
+		log.Errorf("Failed to shutdown database connection with error: %+v", err)
 	}
 
 	if err := srv.Shutdown(shutDownTimeOut); err != nil {
